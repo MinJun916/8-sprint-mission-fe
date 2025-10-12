@@ -1,0 +1,33 @@
+@use '@/styles/mixin' as m;
+@use '@/styles/variable' as v;
+
+.entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  .text {
+    color: v.$secondary-800;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .btn {
+    @include m.link-reset;
+
+    color: v.$primary-100;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+  }
+}

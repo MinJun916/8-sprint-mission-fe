@@ -1,19 +1,29 @@
 import styles from '@/styles/components/Input.module.scss';
 
-const Input = ({ type = 'title', value = '', onChange = () => {} }) => {
-  const typeMap = {
+const Input = ({ type = 'title', name = '', value = '', onChange = () => {} }) => {
+  const placeholderMap = {
     title: '제목을 입력해주세요',
+    email: '이메일을 입력해주세요',
+    password: '비밀번호를 입력해주세요',
+  };
+
+  const inputTypeMap = {
+    title: 'text',
+    email: 'email',
+    password: 'password',
   };
 
   const handleChange = (e) => {
-    const input = e.target.value;
-    onChange(input);
+    const nextValue = e.target.value;
+    onChange(name, nextValue);
   };
 
   return (
     <input
       className={styles.input}
-      placeholder={typeMap[type]}
+      name={name}
+      type={inputTypeMap[type]}
+      placeholder={placeholderMap[type]}
       value={value}
       onChange={handleChange}
     />

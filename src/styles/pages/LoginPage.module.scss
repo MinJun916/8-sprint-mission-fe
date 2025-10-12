@@ -1,0 +1,39 @@
+@use '@/styles/variable' as v;
+@use '@/styles/mixin' as m;
+
+.loginPage {
+  @include m.center-block(648px);
+  margin-top: 231px;
+  margin-bottom: 284px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.formContainer {
+  width: 100%;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.formName {
+  color: v.$secondary-800;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+}

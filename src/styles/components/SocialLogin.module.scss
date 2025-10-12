@@ -1,0 +1,28 @@
+@use '@/styles/variable' as v;
+
+.socialLogin {
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 24px;
+
+  padding: 16px 23px;
+  border-radius: 8px;
+  background: #e6f2ff;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socialLoginTitle {
+  color: v.$secondary-800;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.socialLoginBtns {
+  display: flex;
+  gap: 16px;
+}
