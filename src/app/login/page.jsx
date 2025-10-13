@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Input from '@/components/Input';
 import brandLogo_lg from '/public/brandLogo_lg.svg';
@@ -15,6 +15,8 @@ const LoginPage = () => {
     email: '',
     password: '',
   });
+  const [isVisible, setIsVisible] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(false);
 
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
@@ -24,6 +26,11 @@ const LoginPage = () => {
   };
 
   const handleSubmit = () => {};
+
+  useEffect(() => {
+    const isFormValid = form.email.trim().length > 0 && form.password.trim().length > 0;
+    setIsValidForm(isFormValid);
+  }, [form]);
 
   return (
     <div className={styles.loginPage}>
@@ -36,14 +43,21 @@ const LoginPage = () => {
           </div>
           <div className={styles.form}>
             <div className={styles.formName}>비밀번호</div>
-            <Input type="password" name="password" value={form.password} onChange={handleChange} />
+            <Input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              isVisible={isVisible}
+              setIsVisible={setIsVisible}
+            />
           </div>
           <Button
             className={styles.loginBtn}
             type="login"
             size="lg"
             bg="none"
-            disabled={true}
+            disabled={!isValidForm}
             onClick={handleSubmit}
           />
         </div>

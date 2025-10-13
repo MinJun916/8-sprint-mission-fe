@@ -1,6 +1,14 @@
 @use '@/styles/mixin' as m;
 @use '@/styles/variable' as v;
 
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .input {
   @include m.input-reset;
 
@@ -23,4 +31,14 @@
   &::placeholder {
     color: v.$secondary-400;
   }
+}
+
+.eyeIcon {
+  @include m.button-reset;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1;
 }
