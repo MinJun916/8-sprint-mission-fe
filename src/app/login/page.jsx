@@ -10,6 +10,8 @@ import Button from '@/components/Button';
 import SocialLogin from '@/components/SocialLogin.jsx';
 import AuthEntry from '@/components/AuthEntry';
 
+import { isEmailValid, isPasswordValid } from '@/lib/formValidator';
+
 const LoginPage = () => {
   const [form, setForm] = useState({
     email: '',
@@ -17,6 +19,10 @@ const LoginPage = () => {
   });
   const [isVisible, setIsVisible] = useState(false);
   const [isValidForm, setIsValidForm] = useState(false);
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+  });
 
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
@@ -25,10 +31,17 @@ const LoginPage = () => {
     }));
   };
 
+  const handleBlur = (fieldName) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [fieldName]: true,
+    }));
+  };
+
   const handleSubmit = () => {};
 
   useEffect(() => {
-    const isFormValid = form.email.trim().length > 0 && form.password.trim().length > 0;
+    const isFormValid = isEmailValid(form.email) && isPasswordValid(form.password);
     setIsValidForm(isFormValid);
   }, [form]);
 
@@ -39,8 +52,17 @@ const LoginPage = () => {
         <div className={styles.loginForm}>
           <div className={styles.form}>
             <div className={styles.formName}>이메일</div>
-            <Input type="email" name="email" value={form.email} onChange={handleChange} />
+            <Input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
           </div>
+          {touched.email && !isEmailValid(form.email) && (
+            <div className={styles.errorMessage}>이메일 형식이 올바르지 않습니다.</div>
+          )}
           <div className={styles.form}>
             <div className={styles.formName}>비밀번호</div>
             <Input
@@ -48,10 +70,14 @@ const LoginPage = () => {
               name="password"
               value={form.password}
               onChange={handleChange}
+              onBlur={handleBlur}
               isVisible={isVisible}
               setIsVisible={setIsVisible}
             />
           </div>
+          {touched.password && !isPasswordValid(form.password) && (
+            <div className={styles.errorMessage}>비밀번호는 8자 이상이어야 합니다.</div>
+          )}
           <Button
             className={styles.loginBtn}
             type="login"

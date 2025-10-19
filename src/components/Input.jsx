@@ -7,6 +7,7 @@ const Input = ({
   name = '',
   value = '',
   onChange = () => {},
+  onBlur = () => {},
   isVisible = false,
   setIsVisible = () => {},
 }) => {
@@ -31,6 +32,10 @@ const Input = ({
     onChange(name, nextValue);
   };
 
+  const handleBlur = () => {
+    onBlur(name);
+  };
+
   return (
     <div className={styles.inputContainer}>
       <input
@@ -40,6 +45,7 @@ const Input = ({
         placeholder={placeholderMap[type]}
         value={value}
         onChange={handleChange}
+        onBlur={handleBlur}
       />
       {type === 'password' && (
         <button className={styles.eyeIcon} onClick={() => setIsVisible(!isVisible)}>
