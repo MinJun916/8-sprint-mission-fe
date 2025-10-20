@@ -6,7 +6,7 @@ import Button from '@/components/Button.jsx';
 import Textarea from '@/components/Textarea.jsx';
 
 import styles from '@/styles/components/AddComment.module.scss';
-import api from '@/lib/api';
+import api from '@/lib/fetchApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AddComment = ({ id = '' }) => {

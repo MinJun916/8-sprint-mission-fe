@@ -1,11 +1,48 @@
+import axios from 'axios';
+import { clearAccessToken, getAccessToken, setAccessToken } from './token';
+
 const BASE_URL = 'https://codeitsprintmission.onrender.com';
 
-export default async function api(endpoint, options = {}) {
-  const res = await fetch(`${BASE_URL}${endpoint}`, options);
+const api = axios.create({
+  baseURL: BASE_URL,
+  adapter: 'fetch',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
 
-  if (!res.ok) {
-    throw new Error(`API Error ${res.status}`);
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = getAccessToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return res;
-}
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const { data } = await api.post('/auth/refresh');
+        setAccessToken(data.accessToken);
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+        return api(originalRequest);
+      } catch {
+        clearAccessToken();
+
+        if (typeof window !== 'undefined') window.location.href = '/signin';
+
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
+export default api;

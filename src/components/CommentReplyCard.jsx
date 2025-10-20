@@ -6,7 +6,7 @@ import ic_profile from '/public/icons/ic_profile.svg';
 import { formatTimeAgo } from '@/lib/dayjs.js';
 
 import styles from '@/styles/components/CommentReplyCard.module.scss';
-import api from '@/lib/api.js';
+import api from '@/lib/fetchApi.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import Button from '@/components/Button.jsx';

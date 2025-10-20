@@ -5,7 +5,7 @@ import CommentReplyCard from '@/components/CommentReplyCard';
 
 import styles from '@/styles/pages/DetailArticlePage.module.scss';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
+import api from '@/lib/fetchApi';
 import { useParams, useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import EmptyBoard from '@/components/EmptyBoard';

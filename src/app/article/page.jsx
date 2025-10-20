@@ -8,7 +8,7 @@ import DropDown from '@/components/DropDown.jsx';
 import ArticleList from '@/components/ArticleList.jsx';
 
 import styles from '@/styles/pages/ArticlePage.module.scss';
-import api from '@/lib/api';
+import api from '@/lib/fetchApi';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { convertTz } from '@/lib/dayjs';

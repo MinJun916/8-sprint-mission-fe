@@ -8,7 +8,7 @@ import ic_profile from '/public/icons/ic_profile.svg';
 import Image from 'next/image';
 import { convertTz } from '@/lib/dayjs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/api';
+import api from '@/lib/fetchApi';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from './LoadingSpinner';
 

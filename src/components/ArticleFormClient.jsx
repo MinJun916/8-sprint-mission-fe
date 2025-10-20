@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import styles from '@/styles/components/ArticleFormClient.module.scss';
 import Input from '@/components/Input';
 import Textarea from '@/components/Textarea';
-import api from '@/lib/api';
+import api from '@/lib/fetchApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
