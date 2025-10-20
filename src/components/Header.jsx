@@ -33,7 +33,7 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <Link href="/login" className={styles.linkTag}>
+      <Link href="/signin" className={styles.linkTag}>
         <Button type="login" />
       </Link>
     </div>

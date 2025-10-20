@@ -5,7 +5,7 @@ import ic_back from '/public/icons/ic_back.svg';
 import styles from '@/styles/components/Button.module.scss';
 
 /*
-  type: login | write | post | explore | goBack | signup
+  type: login | write | post | explore | goBack | signup | confirm
   size: sm | md | lg
   bg: primary-100 | 200 | 300 | none
   disabled: true | false
@@ -25,6 +25,7 @@ const Button = ({
     edit: '수정 완료',
     cancel: '취소',
     signup: '회원가입',
+    confirm: '확인',
   };
 
   if (type === 'goBack') {

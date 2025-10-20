@@ -1,0 +1,32 @@
+@use '@/styles/variable' as v;
+@use '@/styles/mixin' as m;
+
+.overlay {
+  @include m.overlay;
+}
+
+.modal {
+  width: 540px;
+  height: 250px;
+  padding: 40px;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 40px;
+
+  background: v.$white;
+}
+
+.modalContent {
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  color: v.$secondary-800;
+}

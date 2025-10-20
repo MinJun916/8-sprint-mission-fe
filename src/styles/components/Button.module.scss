@@ -7,17 +7,16 @@
   justify-content: center;
   align-items: center;
   height: 42px;
-
-  background: v.$primary-100;
   padding: 12px 23px;
   border-radius: 8px;
-
+  background: v.$primary-100;
   color: v.$coolGray-100;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 26px;
 
+  /* 크기별 스타일 */
   &.md {
     width: 240px;
     height: 48px;
@@ -32,18 +31,20 @@
     border-radius: 40px;
   }
 
+  &.modal {
+    width: 165px;
+    height: 48px;
+    padding: 12px 23px;
+    border-radius: 8px;
+  }
+
+  /* 색상별 스타일 */
   &.primary-200 {
     background: v.$primary-200;
   }
 
   &.primary-300 {
     background: v.$primary-300;
-  }
-
-  &.none {
-    background: v.$primary-100;
-
-    // color: v.$coolGray-500;
   }
 
   &.disabled {

@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Input from '@/components/Input';
+import Input from '@/components/Input.jsx';
 import brandLogo_lg from '/public/brandLogo_lg.svg';
 
 import styles from '@/styles/pages/LoginPage.module.scss';
-import Button from '@/components/Button';
+import Button from '@/components/Button.jsx';
 import SocialLogin from '@/components/SocialLogin.jsx';
-import AuthEntry from '@/components/AuthEntry';
+import AuthEntry from '@/components/AuthEntry.jsx';
+import Modal from '@/components/Modal.jsx';
 
 import { isEmailValid, isPasswordValid } from '@/lib/formValidator.js';
 
@@ -23,6 +24,7 @@ const LoginPage = () => {
     email: false,
     password: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
@@ -38,7 +40,10 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = () => {};
+  let modalType = 'passwordError';
+  const handleSubmit = () => {
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     const isFormValid = isEmailValid(form.email) && isPasswordValid(form.password);
@@ -47,6 +52,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.loginPage}>
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} type={modalType} />}
       <Image src={brandLogo_lg} alt="logoImg" width={396} height={132} />
       <div className={styles.formContainer}>
         <div className={styles.loginForm}>

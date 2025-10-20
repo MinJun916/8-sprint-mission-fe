@@ -16,6 +16,7 @@ import {
 } from '@/lib/formValidator.js';
 
 import styles from '@/styles/pages/SignupPage.module.scss';
+import Modal from '@/components/Modal.jsx';
 
 const SignupPage = () => {
   const [form, setForm] = useState({
@@ -33,6 +34,7 @@ const SignupPage = () => {
     password: false,
     passwordCheck: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
@@ -48,6 +50,10 @@ const SignupPage = () => {
     }));
   };
 
+  const handleSubmit = () => {
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     const { email, nickname, password, passwordCheck } = form;
     const isFormValid =
@@ -60,6 +66,7 @@ const SignupPage = () => {
 
   return (
     <div className={styles.signupPage}>
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} type="emailError" />}
       <Image src={brandLogo_lg} alt="logoImg" width={396} height={132} />
       <div className={styles.formContainer}>
         <div className={styles.signupForm}>
@@ -113,7 +120,13 @@ const SignupPage = () => {
               }
             />
           </div>
-          <Button type="signup" size="lg" bg="none" disabled={!isValidForm} />
+          <Button
+            type="signup"
+            size="lg"
+            bg="none"
+            disabled={!isValidForm}
+            onClick={handleSubmit}
+          />
         </div>
         <SocialLogin />
         <AuthEntry type="login" />

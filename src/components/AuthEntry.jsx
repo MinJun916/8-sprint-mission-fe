@@ -7,7 +7,7 @@ import styles from '@/styles/components/AuthEntry.module.scss';
 const AuthEntry = ({ type = 'signup' }) => {
   const linkMap = {
     signup: '/signup',
-    login: '/login',
+    login: '/signin',
   };
 
   const textMap = {
