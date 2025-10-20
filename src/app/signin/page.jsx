@@ -12,8 +12,13 @@ import AuthEntry from '@/components/AuthEntry.jsx';
 import Modal from '@/components/Modal.jsx';
 
 import { isEmailValid, isPasswordValid } from '@/lib/formValidator.js';
+import { useRouter } from 'next/navigation';
+import { useSignin } from '@/hooks/useAuth.jsx';
 
 const LoginPage = () => {
+  const router = useRouter();
+  const signin = useSignin();
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -40,9 +45,14 @@ const LoginPage = () => {
     }));
   };
 
-  let modalType = 'passwordError';
-  const handleSubmit = () => {
-    setIsModalOpen(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signin.mutateAsync({ email: form.email, password: form.password });
+      router.push('/');
+    } catch {
+      setIsModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -52,7 +62,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.loginPage}>
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} type={modalType} />}
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} type="passwordError" />}
       <Image src={brandLogo_lg} alt="logoImg" width={396} height={132} />
       <div className={styles.formContainer}>
         <div className={styles.loginForm}>

@@ -26,6 +26,7 @@ const Button = ({
     cancel: '취소',
     signup: '회원가입',
     confirm: '확인',
+    logout: '로그아웃',
   };
 
   if (type === 'goBack') {

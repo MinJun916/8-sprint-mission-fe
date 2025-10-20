@@ -17,8 +17,11 @@ import {
 
 import styles from '@/styles/pages/SignupPage.module.scss';
 import Modal from '@/components/Modal.jsx';
+import { useRouter } from 'next/navigation';
+import { useSignup } from '@/hooks/useAuth.jsx';
 
 const SignupPage = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: '',
     nickname: '',
@@ -36,6 +39,8 @@ const SignupPage = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const signup = useSignup();
+
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
       ...prevForm,
@@ -50,8 +55,18 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    setIsModalOpen(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signup.mutateAsync({
+        email: form.email,
+        nickname: form.nickname,
+        password: form.password,
+      });
+      router.push('/signin');
+    } catch (error) {
+      setIsModalOpen(true);
+    }
   };
 
   useEffect(() => {
