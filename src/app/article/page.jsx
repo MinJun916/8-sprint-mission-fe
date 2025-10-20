@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Button from '@/components/Button.jsx';
 import BestArticleCard from '@/components/BestArticleCard.jsx';
 import SearchInput from '@/components/SearchInput.jsx';
@@ -8,12 +10,10 @@ import DropDown from '@/components/DropDown.jsx';
 import ArticleList from '@/components/ArticleList.jsx';
 
 import styles from '@/styles/pages/ArticlePage.module.scss';
-import api from '@/lib/fetchApi';
-import { useQuery } from '@tanstack/react-query';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import { convertTz } from '@/lib/dayjs';
-import { useState, useEffect } from 'react';
-import EmptyBoard from '@/components/EmptyBoard';
+import LoadingSpinner from '@/components/LoadingSpinner.jsx';
+import { convertTz } from '@/lib/dayjs.js';
+import EmptyBoard from '@/components/EmptyBoard.jsx';
+import api from '@/lib/api.js';
 
 const ArticlePage = () => {
   const [sort, setSort] = useState('recent');
@@ -31,8 +31,9 @@ const ArticlePage = () => {
 
   const getArticles = async ({ sort, searchValue }) => {
     const q = searchValue.trim();
-    const res = await api(`/articles?sort=${sort}&q=${q}`);
-    return res.json();
+    // const res = await api(`/articles?sort=${sort}&q=${q}`);
+    const res = await api.get('/articles', { params: { sort: sort, q: q } });
+    return res.data;
   };
 
   const {

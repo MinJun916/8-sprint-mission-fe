@@ -6,25 +6,26 @@ import Button from '@/components/Button.jsx';
 import Textarea from '@/components/Textarea.jsx';
 
 import styles from '@/styles/components/AddComment.module.scss';
-import api from '@/lib/fetchApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '@/lib/api.js';
 
-const AddComment = ({ id = '' }) => {
+const AddComment = ({ id = '', type = 'article' }) => {
   const queryClient = useQueryClient();
 
   const [textValue, setTextValue] = useState('');
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
   const addComment = async (data) => {
-    const res = await api('/comments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    // const res = await api('/comments', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+    const res = await api.post(`/${type}-comments/${id}`, data);
 
-    return res.json();
+    return res.data;
   };
 
   const addMutation = useMutation({
@@ -44,7 +45,6 @@ const AddComment = ({ id = '' }) => {
 
     const data = {
       content: textValue,
-      articleId: id,
     };
 
     addMutation.mutate(data);

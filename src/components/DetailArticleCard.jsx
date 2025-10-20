@@ -8,17 +8,19 @@ import ic_profile from '/public/icons/ic_profile.svg';
 import Image from 'next/image';
 import { convertTz } from '@/lib/dayjs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '@/lib/fetchApi';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from './LoadingSpinner';
+import api from '@/lib/api.js';
 
 const DetailArticleCard = ({ id = '' }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const getDetailArticle = async () => {
-    const res = await api(`/articles/${id}`);
-    return res.json();
+    // const res = await api(`/articles/${id}`);
+    // return res.json();
+    const res = await api.get(`/articles/${id}`);
+    return res.data;
   };
 
   const {
@@ -31,11 +33,13 @@ const DetailArticleCard = ({ id = '' }) => {
   });
 
   const deleteArticle = async (id) => {
-    const res = await api(`/articles/${id}`, {
-      method: 'DELETE',
-    });
+    // const res = await api(`/articles/${id}`, {
+    //   method: 'DELETE',
+    // });
 
-    return res.json();
+    // return res.json();
+    const res = await api.delete(`/articles/${id}`);
+    return res.data;
   };
 
   const deleteArticleMutate = useMutation({

@@ -6,34 +6,44 @@ import ic_profile from '/public/icons/ic_profile.svg';
 import { formatTimeAgo } from '@/lib/dayjs.js';
 
 import styles from '@/styles/components/CommentReplyCard.module.scss';
-import api from '@/lib/fetchApi.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import Button from '@/components/Button.jsx';
 import Textarea from './Textarea';
+import api from '@/lib/api.js';
 
-const CommentReplyCard = ({ id = '', articleId = '', content = '', updatedAt = '' }) => {
+const CommentReplyCard = ({
+  id = '',
+  articleId = '',
+  content = '',
+  updatedAt = '',
+  type = 'article',
+}) => {
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
   const [newComment, setNewComment] = useState(content);
 
   const editComment = async (data) => {
-    const res = await api(`/comments/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    return await res.json();
+    // const res = await api(`/comments/${id}`, {
+    //   method: 'PATCH',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+    // return await res.json();
+    const res = await api.patch(`/${type}-comments/${id}`, data);
+    return res.data;
   };
 
   const deleteComment = async () => {
-    const res = await api(`/comments/${id}`, {
-      method: 'DELETE',
-    });
+    // const res = await api(`/comments/${id}`, {
+    //   method: 'DELETE',
+    // });
 
-    return await res.json();
+    // return await res.json();
+    const res = await api.delete(`/${type}-comments/${id}`);
+    return res.data;
   };
 
   const editMutation = useMutation({

@@ -1,16 +1,15 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useRouter } from 'next/navigation';
+import api from '@/lib/api.js';
 import Button from '@/components/Button';
 import CommentReplyCard from '@/components/CommentReplyCard';
-
-import styles from '@/styles/pages/DetailArticlePage.module.scss';
-import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/fetchApi';
-import { useParams, useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import EmptyBoard from '@/components/EmptyBoard';
 import DetailArticleCard from '@/components/DetailArticleCard';
 import AddComment from '@/components/AddComment.jsx';
+import styles from '@/styles/pages/DetailArticlePage.module.scss';
 
 const DetailArticlePage = () => {
   const router = useRouter();
@@ -18,8 +17,9 @@ const DetailArticlePage = () => {
   const { id } = params;
 
   const getComments = async (id) => {
-    const res = await api(`/comments/article/${id}`);
-    return res.json();
+    // const res = await api(`/comments/article/${id}`);
+    const res = await api.get(`/article-comments/${id}`);
+    return res.data;
   };
 
   const {
