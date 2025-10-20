@@ -10,7 +10,7 @@ import Button from '@/components/Button';
 import SocialLogin from '@/components/SocialLogin.jsx';
 import AuthEntry from '@/components/AuthEntry';
 
-import { isEmailValid, isPasswordValid } from '@/lib/formValidator';
+import { isEmailValid, isPasswordValid } from '@/lib/formValidator.js';
 
 const LoginPage = () => {
   const [form, setForm] = useState({
@@ -58,11 +58,9 @@ const LoginPage = () => {
               value={form.email}
               onChange={handleChange}
               onBlur={handleBlur}
+              isError={touched.email && !isEmailValid(form.email)}
             />
           </div>
-          {touched.email && !isEmailValid(form.email) && (
-            <div className={styles.errorMessage}>이메일 형식이 올바르지 않습니다.</div>
-          )}
           <div className={styles.form}>
             <div className={styles.formName}>비밀번호</div>
             <Input
@@ -73,11 +71,9 @@ const LoginPage = () => {
               onBlur={handleBlur}
               isVisible={isVisible}
               setIsVisible={setIsVisible}
+              isError={touched.password && !isPasswordValid(form.password)}
             />
           </div>
-          {touched.password && !isPasswordValid(form.password) && (
-            <div className={styles.errorMessage}>비밀번호는 8자 이상이어야 합니다.</div>
-          )}
           <Button
             className={styles.loginBtn}
             type="login"

@@ -8,6 +8,13 @@ import Input from '@/components/Input';
 import Button from '@/components/Button';
 import brandLogo_lg from '/public/brandLogo_lg.svg';
 
+import {
+  isEmailValid,
+  isPasswordValid,
+  isPasswordCheckValid,
+  isNicknameValid,
+} from '@/lib/formValidator.js';
+
 import styles from '@/styles/pages/SignupPage.module.scss';
 
 const SignupPage = () => {
@@ -20,6 +27,12 @@ const SignupPage = () => {
   const [isValidForm, setIsValidForm] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
+  const [touched, setTouched] = useState({
+    email: false,
+    nickname: false,
+    password: false,
+    passwordCheck: false,
+  });
 
   const handleChange = (fieldName, value) => {
     setForm((prevForm) => ({
@@ -28,15 +41,20 @@ const SignupPage = () => {
     }));
   };
 
+  const handleBlur = (fieldName) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [fieldName]: true,
+    }));
+  };
+
   useEffect(() => {
     const { email, nickname, password, passwordCheck } = form;
     const isFormValid =
-      email.trim().length > 0 &&
-      nickname.trim().length > 0 &&
-      password.trim().length > 0 &&
-      passwordCheck.trim().length > 0 &&
-      password === passwordCheck;
-
+      isEmailValid(email) &&
+      isPasswordValid(password) &&
+      isNicknameValid(nickname) &&
+      isPasswordCheckValid(password, passwordCheck);
     setIsValidForm(isFormValid);
   }, [form]);
 
@@ -47,11 +65,25 @@ const SignupPage = () => {
         <div className={styles.signupForm}>
           <div className={styles.form}>
             <div className={styles.formName}>이메일</div>
-            <Input type="email" value={form.email} name="email" onChange={handleChange} />
+            <Input
+              type="email"
+              value={form.email}
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isError={touched.email && !isEmailValid(form.email)}
+            />
           </div>
           <div className={styles.form}>
             <div className={styles.formName}>닉네임</div>
-            <Input type="nickname" value={form.nickname} name="nickname" onChange={handleChange} />
+            <Input
+              type="nickname"
+              value={form.nickname}
+              name="nickname"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isError={touched.nickname && !isNicknameValid(form.nickname)}
+            />
           </div>
           <div className={styles.form}>
             <div className={styles.formName}>비밀번호</div>
@@ -60,6 +92,8 @@ const SignupPage = () => {
               value={form.password}
               name="password"
               onChange={handleChange}
+              onBlur={handleBlur}
+              isError={touched.password && !isPasswordValid(form.password)}
               isVisible={isPasswordVisible}
               setIsVisible={setIsPasswordVisible}
             />
@@ -71,8 +105,12 @@ const SignupPage = () => {
               value={form.passwordCheck}
               name="passwordCheck"
               onChange={handleChange}
+              onBlur={handleBlur}
               isVisible={isPasswordCheckVisible}
               setIsVisible={setIsPasswordCheckVisible}
+              isError={
+                touched.passwordCheck && !isPasswordCheckValid(form.password, form.passwordCheck)
+              }
             />
           </div>
           <Button type="signup" size="lg" bg="none" disabled={!isValidForm} />
